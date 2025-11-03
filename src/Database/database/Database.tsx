@@ -12,7 +12,6 @@ export class Database {
     return SQLite.openDatabaseAsync("biblioteca.db");
   }
 
-  // inicializa o banco de dados
   static async initDb(syncDb?: boolean) {
     const db = await this.getConnection();
     console.log("Database inicializado:", db);
