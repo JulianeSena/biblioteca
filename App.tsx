@@ -15,11 +15,14 @@ const Tab = createBottomTabNavigator();
 
 function MainTabs() {
 
-  useEffect(() => {
-    
-    Database.initDb();
-  }, []);
 
+  useEffect(() => {
+    const init = async () => {
+      await Database.initDb(true); // força recriação
+      console.log("Banco de dados reinicializado!");
+    };
+    init();
+  }, []);
   return (
     <Tab.Navigator
       screenOptions={({ route }) => ({

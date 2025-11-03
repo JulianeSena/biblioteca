@@ -25,4 +25,4 @@ export class LivroService {
     return allRows.map(row => new Livro(row));
   }
 
-}
+} 

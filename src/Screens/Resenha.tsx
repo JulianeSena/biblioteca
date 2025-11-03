@@ -10,7 +10,7 @@ interface Props {
 }
 
 export default function Resenha({ route, navigation }: Props) {
-  // Garantindo que "livro" exista
+
   const livro: Livro | undefined = route.params?.livro;
 
   const [resenha, setResenha] = useState<string>(livro?.resenha || '');

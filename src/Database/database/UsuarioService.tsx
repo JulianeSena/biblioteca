@@ -16,8 +16,6 @@ export class Usuario {
 
 export class UsuarioService {
   static TABLE = 'usuario';
-
-  // cria tabela se não existir
   static async initDb() {
     await Database.runQuery(
       `
@@ -30,7 +28,6 @@ export class UsuarioService {
     );
   }
 
-  // cadastra novo usuário
   static async create(obj: Usuario) {
     const resultado = await Database.runQuery(
       `
@@ -44,7 +41,6 @@ export class UsuarioService {
     return obj;
   }
 
-  // faz login verificando nome e senha
   static async login(nome: string, senha: string) {
     const db = await Database.getConnection();
 

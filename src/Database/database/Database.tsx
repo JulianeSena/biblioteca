@@ -8,21 +8,26 @@ interface Query {
 const table = "livro";
 
 export class Database {
-  static getConnection() {
-    return SQLite.openDatabaseAsync("biblioteca.db");
+  static async getConnection() {
+    const db = await SQLite.openDatabaseAsync("biblioteca.db");
+    return db;
   }
 
   static async initDb(syncDb?: boolean) {
     const db = await this.getConnection();
-    console.log("Database inicializado:", db);
+    console.log("Database inicializado:", db.databasePath);
 
     if (syncDb || !(await this.isDbCreated())) {
+      console.log("Criando tabela...");
       await this.dropDb();
       await this.createDb();
+    } else {
+      console.log("Tabela já existente!");
     }
   }
 
   static async ReinitDb() {
+    console.log("Reiniciando banco de dados...");
     await this.dropDb();
     await this.createDb();
   }
@@ -63,6 +68,7 @@ export class Database {
   static async runQuery(sql: Query['sql'], args?: Query['args']) {
     const db = await this.getConnection();
     try {
+      console.log("Executando SQL:", sql, "Args:", args);
       const result = await db.runAsync(sql, args);
       return result.lastInsertRowId;
     } catch (error) {
@@ -77,7 +83,7 @@ export class Database {
       const result = await db.getAllAsync(`SELECT * FROM ${table};`);
       return result;
     } catch (error) {
-      console.log(" Erro ao buscar livros:", error);
+      console.log("Erro ao buscar livros:", error);
       return [];
     }
   }
@@ -92,7 +98,7 @@ export class Database {
       const result = await db.getFirstAsync(`SELECT * FROM ${table} WHERE id = ?;`, [id]);
       return result;
     } catch (error) {
-      console.log(" Erro ao buscar por ID:", error);
+      console.log("Erro ao buscar por ID:", error);
       return null;
     }
   }
