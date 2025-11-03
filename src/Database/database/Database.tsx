@@ -26,11 +26,6 @@ export class Database {
     }
   }
 
-  static async ReinitDb() {
-    console.log("Reiniciando banco de dados...");
-    await this.dropDb();
-    await this.createDb();
-  }
 
   private static async isDbCreated() {
     try {
@@ -58,7 +53,8 @@ export class Database {
         autor TEXT NOT NULL,
         genero TEXT,
         ano INTEGER,
-        status TEXT
+        status TEXT, 
+        resenha TEXT
       );
     `;
     await this.runQuery(query);
@@ -105,8 +101,8 @@ export class Database {
 
   static async insert(livro: { titulo: string; autor: string; genero: string; ano: number; status: string }) {
     const query = `
-      INSERT INTO ${table} (titulo, autor, genero, ano, status)
-      VALUES (?, ?, ?, ?, ?);
+      INSERT INTO ${table} (titulo, autor, genero, ano, status, resenha)
+      VALUES (?, ?, ?, ?, ?, ?);
     `;
     const result = await this.runQuery(query, [
       livro.titulo,
@@ -114,6 +110,7 @@ export class Database {
       livro.genero,
       livro.ano,
       livro.status,
+      livro.resenha,
     ]);
     return result;
   }

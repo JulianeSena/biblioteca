@@ -42,6 +42,12 @@ export default function Listar({ navigation }: any) {
     );
   }
 
+  async function editarLivro(livro: Livro){
+    navigation.navigate('Resenha', { livro });
+  }
+
+
+
   const renderItem = ({ item }: { item: Livro }) => (
     <View style={styles.listItem}>
       <View>
@@ -56,6 +62,10 @@ export default function Listar({ navigation }: any) {
 
       <TouchableOpacity style={styles.buttonDanger} onPress={() => excluirLivro(item)}>
         <Text style={styles.buttonDangerText}>Excluir</Text>
+      </TouchableOpacity>
+
+      <TouchableOpacity style={styles.buttonDanger} onPress={() => editarLivro(item)}>
+        <Text style={styles.buttonDangerText}>Resenha</Text>
       </TouchableOpacity>
     </View>
   );

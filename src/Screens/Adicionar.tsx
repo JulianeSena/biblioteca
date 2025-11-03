@@ -29,7 +29,7 @@ export default function Adicionar({ navigation }: any) {
       await LivroService.create(novoLivro);
       Alert.alert('Livro adicionado com sucesso!');
       limparCampos();
-      navigation.navigate('Listar Livros');
+      navigation.navigate('Estante');
     } catch (error) {
       console.error(error);
       Alert.alert('Não foi possível adicionar o livro.');
